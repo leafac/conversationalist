@@ -5,34 +5,33 @@ export default async (
   topic: string,
   { nGramSize = 2 }: { nGramSize?: number } = {}
 ) => {
-  // const page = "Pet_door";
-  // const url = `https://en.wikipedia.org/w/api.php?action=parse&page=${page}&prop=text&format=json&formatversion=2`;
-  // const response = (await got(url).json()) as any;
-  // const text = response.parse.text;
-  // const dom = JSDOM.fragment(`<div>${text}</div>`);
-  // // console.log(dom.firstElementChild!.innerHTML);
-  // // console.log(dom.firstElementChild!.textContent);
-  // const corpus = dom.firstElementChild!.textContent!;
-  // const tokens = corpus.split(/\W+/);
-  // // console.log(tokens);
-  //              0    1      2           length 3
+  // Scraping
+  const page = "Pet_door";
+  const url = `https://en.wikipedia.org/w/api.php?action=parse&page=${page}&prop=text&format=json&formatversion=2`;
+  const response = (await got(url).json()) as any;
+  const text = response.parse.text;
+  const dom = JSDOM.fragment(`<div>${text}</div>`);
+  const corpus = dom.firstElementChild!.textContent!;
 
-  // const tokens = ["A", "dog", "exiting"];
-  // const nGrams: { [tokens: string]: { [token: string]: number } } = {};
-  // for (
-  //   let currentTokenIndex = nGramSize;
-  //   currentTokenIndex < tokens.length;
-  //   currentTokenIndex++
-  // ) {
-  //   const key = tokens
-  //     .slice(currentTokenIndex - nGramSize, currentTokenIndex)
-  //     .join(" ");
-  //   nGrams[key] ??= {};
-  //   nGrams[key][tokens[currentTokenIndex]] =
-  //     (nGrams[key][tokens[currentTokenIndex]] ?? 0) + 1;
+  // Tokenization
+  const tokens = corpus.split(/\W+/);
 
-  const nGrams = { "A dog": { exiting: 1, sleeps: 2 } };
+  // nGrams count
+  const nGrams: { [tokens: string]: { [token: string]: number } } = {};
+  for (
+    let currentTokenIndex = nGramSize;
+    currentTokenIndex < tokens.length;
+    currentTokenIndex++
+  ) {
+    const key = tokens
+      .slice(currentTokenIndex - nGramSize, currentTokenIndex)
+      .join(" ");
+    nGrams[key] ??= {};
+    nGrams[key][tokens[currentTokenIndex]] =
+      (nGrams[key][tokens[currentTokenIndex]] ?? 0) + 1;
+  }
 
+  // Build model
   const model = Object.fromEntries(
     Object.entries(nGrams).map(([tokens, nextTokens]) => {
       const totalCount = Object.values(nextTokens).reduce(
