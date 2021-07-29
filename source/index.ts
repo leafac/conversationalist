@@ -52,10 +52,10 @@ export default async (
     );
 
   const startTokenIndex = Math.floor(Math.random() * tokens.length);
-  const startToken = tokens
-    .slice(startTokenIndex, startTokenIndex + nGramSize)
-    .join(" ");
-  const sentenceTokens: string[] = [startToken];
+  const sentenceTokens: string[] = tokens.slice(
+    startTokenIndex,
+    startTokenIndex + nGramSize
+  );
   for (const _ of new Array(6)) {
     const currentTokens = sentenceTokens.slice(-nGramSize).join(" ");
     const nextTokens = model[currentTokens];
