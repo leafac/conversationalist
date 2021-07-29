@@ -32,21 +32,41 @@ export default async (
   }
 
   // Build model
-  const model = Object.fromEntries(
-    Object.entries(nGrams).map(([tokens, nextTokens]) => {
-      const totalCount = Object.values(nextTokens).reduce(
-        (totalCount, count) => totalCount + count,
-        0
-      );
-      let currentCutoff = 0;
-      const cutoffs = Object.fromEntries(
-        Object.entries(nextTokens).map(([token, tokenCount]) => {
-          const weight = tokenCount / totalCount;
-          currentCutoff += weight;
-          return [token, currentCutoff];
-        })
-      );
-      return [tokens, cutoffs];
-    })
-  );
+  const model: { [tokens: string]: { [nextToken: string]: number } } =
+    Object.fromEntries(
+      Object.entries(nGrams).map(([tokens, nextTokens]) => {
+        const totalCount = Object.values(nextTokens).reduce(
+          (totalCount, count) => totalCount + count,
+          0
+        );
+        let currentCutoff = 0;
+        const cutoffs = Object.fromEntries(
+          Object.entries(nextTokens).map(([token, tokenCount]) => {
+            const weight = tokenCount / totalCount;
+            currentCutoff += weight;
+            return [token, currentCutoff];
+          })
+        );
+        return [tokens, cutoffs];
+      })
+    );
+
+  const startTokenIndex = Math.floor(Math.random() * tokens.length);
+  const startToken = tokens
+    .slice(startTokenIndex, startTokenIndex + nGramSize)
+    .join(" ");
+  const sentenceTokens: string[] = [startToken];
+  for (const _ of new Array(6)) {
+    const currentTokens = sentenceTokens.slice(-nGramSize).join(" ");
+    const nextTokens = model[currentTokens];
+    if (nextTokens === undefined) break;
+    const x = Math.random();
+    const nextToken = Object.entries(nextTokens).find(
+      ([nextToken, cutoff]) => x <= cutoff
+    )![0];
+    sentenceTokens.push(nextToken);
+  }
+  const sentence = `${sentenceTokens.join(" ")}.`;
+
+  console.log(sentence);
 };
