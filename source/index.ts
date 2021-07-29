@@ -39,15 +39,10 @@ export default async (
         (totalCount, count) => totalCount + count,
         0
       );
-      const weights = Object.fromEntries(
-        Object.entries(nextTokens).map(([token, tokenCount]) => [
-          token,
-          tokenCount / totalCount,
-        ])
-      );
       let currentCutoff = 0;
       const cutoffs = Object.fromEntries(
-        Object.entries(weights).map(([token, weight]) => {
+        Object.entries(nextTokens).map(([token, tokenCount]) => {
+          const weight = tokenCount / totalCount;
           currentCutoff += weight;
           return [token, currentCutoff];
         })
@@ -55,16 +50,4 @@ export default async (
       return [tokens, cutoffs];
     })
   );
-
-  console.log(model);
-
-  //   tokens       nextTokens
-  // { "A dog": { "exiting": 1, "sleeps": 2 } }
-  // totalCount                                3
-  // weights                 1/3          2/3
-  //                         1/3          3/3
-  //  cutoffs                  0.3333       1
-  // Math.random()  -> 0 -- 1
-  //                        0.1           0.5
-  // Math.random() <= cutoff
 };
