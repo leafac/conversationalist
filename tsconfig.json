@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "rootDir": "source",
+    "outDir": "distribution",
+
+    "target": "ES2019",
+    "module": "commonjs",
+    "esModuleInterop": true,
+
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    "strict": true
+  }
+}

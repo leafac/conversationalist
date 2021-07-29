@@ -1,0 +1,33 @@
+{
+  "name": "conversationalist",
+  "version": "0.0.0",
+  "description": "Fake text about any topic · Better than Lorem Ipsum · Never run out of conversation",
+  "main": "distribution/index.js",
+  "types": "distribution/index.d.ts",
+  "repository": "leafac/conversationalist",
+  "keywords": [
+    "fake text",
+    "lorem ipsum",
+    "faker",
+    "markov chain",
+    "testing"
+  ],
+  "author": "Leandro Facchinetti <conversationalist@leafac.com> (https://leafac.com)",
+  "license": "MIT",
+  "bugs": "https://github.com/leafac/conversationalist/issues",
+  "homepage": "https://github.com/leafac/conversationalist#readme",
+  "scripts": {
+    "test": "prettier --check 'source/**/*' --end-of-line auto && jest"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "jest": {
+    "rootDir": "source",
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
