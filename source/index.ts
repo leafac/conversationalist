@@ -8,6 +8,7 @@ export default async (topic: string, {}: {} = {}) => {
   const text = response.parse.text;
   const dom = JSDOM.fragment(`<div>${text}</div>`);
 
-  console.log(dom.firstElementChild!.innerHTML);
-  console.log(dom.firstElementChild!.textContent);
+  // console.log(dom.firstElementChild!.innerHTML);
+  // console.log(dom.firstElementChild!.textContent);
+  
 };
