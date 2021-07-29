@@ -1,3 +1,5 @@
 - Wikipedia scraping.
+  - Search for the topic to find articles.
+  - Get related articles via links.
 - Train the Markov chain.
 - Generate random text.
