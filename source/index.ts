@@ -7,6 +7,7 @@ export default async (
 ) => {
   // Scraping
   const page = "Pet_door";
+  // TODO: Search https://en.wikipedia.org/w/api.php?action=query&format=json&titles=Pharmacology&prop=extracts&explaintext
   const url = `https://en.wikipedia.org/w/api.php?action=parse&page=${page}&prop=text&format=json&formatversion=2`;
   const response = (await got(url).json()) as any;
   const text = response.parse.text;

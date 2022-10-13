@@ -4,3 +4,5 @@
   - Search for the topic to find articles.
   - Get related articles via links.
 - Command-line tool for producing a cached model.
+
+- https://github.com/emmaBocuma/markov-text-generator
