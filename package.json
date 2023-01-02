@@ -23,7 +23,7 @@
     "https://btc.com/34KJBgtaFYMtDqpSgMayw9qiKWg2GQXA9M"
   ],
   "scripts": {
-    "test": "prettier --check 'source/**/*' --end-of-line auto && jest"
+    "test": "prettier --check './source/**/*' --end-of-line auto && jest"
   },
   "dependencies": {
     "got": "^11.8.2",
